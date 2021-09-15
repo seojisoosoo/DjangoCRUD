@@ -29,3 +29,18 @@ def create(request):
     return redirect('detail', new_blog.id)
     # 요청이 보내졌을 때, return되는 것. 
     # 뭘 만들어서 어디 보내는 게 아니라 원래 있던 페이지로 돌아가야하므로, render가 아닌 redirect이용
+
+def edit(request, id):
+    edit_blog=Blog.objects.get(id=id)
+    return render(request, 'edit.html', {'blog':edit_blog})
+
+def update(request, id):
+    update_blog=Blog.objects.get(id=id)
+    update_blog.title=request.POST['title']
+    update_blog.writer=request.POST['writer']
+    update_blog.body=request.POST['body']
+    update_blog.pub_date=timezone.now()
+    # 현재 시간알려주는 모듈
+    update_blog.save()
+
+    return redirect('detail', update_blog.id)
