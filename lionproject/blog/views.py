@@ -44,3 +44,9 @@ def update(request, id):
     update_blog.save()
 
     return redirect('detail', update_blog.id)
+
+def delete(request,id):
+    delete_blog=Blog.objects.get(id=id)
+    delete_blog.delete()
+    # 위에서는 save를 했다면, 여기서는 delete
+    return redirect('home')
