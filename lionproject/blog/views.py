@@ -11,13 +11,11 @@ blogs = Blog.objects.all()
 def home(request):
     blog_list = []
     for blog in blogs:
-        blog_list.append(blog)
-    context = {
-        'title': blog.title,
-        'writer': blog.writer,
-        'summary': blog.summary,
-    }
-    return render(request, 'home.html', context, {'blogs': blogs})
+        blog_list.append({'title': blog.title,
+                          'writer': blog.writer,
+                          'summary': blog.summary, })
+
+    return render(request, 'home.html', blog_list, {'blogs': blogs})
 
 
 def detail(request, id):
