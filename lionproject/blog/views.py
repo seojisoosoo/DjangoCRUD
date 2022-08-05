@@ -1,21 +1,26 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Blog
 from django.utils import timezone
+from django.http import JsonResponse
 
 # def home(request):
 #     blogs=Blog.objects.all()
 #     return render(request, 'home.html', {'blogs':blogs})
-blogs = Blog.objects.all()
 
 
 def home(request):
+    blogs = Blog.objects.all()
     blog_list = []
     for blog in blogs:
         blog_list.append({'title': blog.title,
                           'writer': blog.writer,
                           'summary': blog.summary, })
 
-    return render(request, 'home.html', blog_list, {'blogs': blogs})
+    return JsonResponse({
+        'blogs': blog_list
+    })
+
+    # render(request, 'home.html', blog_list, {'blogs': blogs})
 
 
 def detail(request, id):
