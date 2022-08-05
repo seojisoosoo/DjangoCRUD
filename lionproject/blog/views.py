@@ -17,7 +17,7 @@ def home(request):
         'writer': blog.writer,
         'summary': blog.summary,
     }
-    return render(request, 'home.html', context)
+    return render(request, 'home.html', context, {'blogs': blogs})
 
 
 def detail(request, id):
