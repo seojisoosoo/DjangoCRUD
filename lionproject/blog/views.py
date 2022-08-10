@@ -146,3 +146,4 @@ def delete(request, id):
             'ok': True,
             'data': None
         })
+# 주석
