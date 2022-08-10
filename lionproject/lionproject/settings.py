@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import dj_database_url
 import django_heroku
 from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,8 +31,8 @@ SECRET_KEY = 'django-insecure-j49xs3!t7gh2cd0_!stcat+$y_joo$#e$=0))+vx#d&_ks1x1q
 
 # 헤로쿠
 DEBUG = False
-ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
-
+# ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -46,11 +47,11 @@ INSTALLED_APPS = [
     'blog',
 ]
 MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    # 'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -143,3 +144,6 @@ CORS_ORIGIN_WHITELIST = (
     "http://127.0.0.1:9000",
     "https://example.com"
 )
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
